@@ -79,6 +79,12 @@ Example:
         gutters: ['CodeMirror-linenumbers']
       });
 
+      this.mirror.on('change', function (instance, changeObj) {
+        this.fire('code-changed', {
+          instance: instance,
+          changeObj: changeObj
+        });
+      }.bind(this));
     },
 
     refresh: function() {
