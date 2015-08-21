@@ -14,18 +14,17 @@ Example:
 -->
 
 <dom-module is="code-mirror">
-
-  <style>
-
-    :host {
-      display: block;
-    }
-
-  </style>
-
   <template>
-  </template>
 
+    <style>
+
+      :host {
+        display: block;
+      }
+
+    </style>
+
+  </template>
 </dom-module>
 
 <script>
@@ -63,7 +62,9 @@ Example:
         type: Boolean,
         value: true,
         observer: '_lineNumbersChanged'
-      }
+      },
+
+      mirror: Object
 
     },
 

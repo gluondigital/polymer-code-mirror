@@ -9,7 +9,7 @@
     "tests"
   ],
   "dependencies": {
-    "polymer": "Polymer/polymer#^1.0.0",
+    "polymer": "polymer/polymer#^1.0.0",
     "codemirror": "~5.3.0"
   },
   "devDependencies": {
