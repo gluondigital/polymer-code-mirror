@@ -10,16 +10,34 @@
 
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
+    <script>
+      window.Polymer = window.Polymer || {};
+      window.Polymer.dom = 'shadow';
+    </script>
+
     <link rel="stylesheet" href="custom-theme.css">
+
     <link rel="import" href="../code-mirror.html">
 
     <style>
+      html,
+      body {
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+        font-family: sans-serif;
+      }
+
+      body {
+        margin: 0;
+      }
+
     </style>
   </head>
 
   <body>
 
-    <code-mirror theme="base16-dark"></code-mirror>
+    <code-mirror></code-mirror>
 
   </body>
 </html>

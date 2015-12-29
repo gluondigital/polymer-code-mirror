@@ -1,35 +1,46 @@
 <link rel="import" href="../polymer/polymer.html">
-<link rel="import" href="code-mirror-import.html">
-
+<link rel="import" href="codemirror-imports.html">
+<link rel="import" href="codemirror-styles.html">
 <!--
 `code-mirror` is a polymer element wrapping the codemirror text editor.
-
-Example:
-
-    <code-mirror>
-    </code-mirror>
-
-@element code-mirror
-@demo demo/index.html
 -->
 
 <dom-module is="code-mirror">
   <template>
-
+    <style include="codemirror-styles"></style>
     <style>
 
       :host {
+        width: 100%;
+        height: 100%;
         display: block;
       }
 
-    </style>
+      :host > div {
+        height: 100% !important;
+        width: 100%;
+      }
 
+    </style>
   </template>
 </dom-module>
 
 <script>
+(function() {
+  'use strict';
+
+  var CM_DEFAULTS = {
+    mode: 'htmlmixed',
+    theme: 'xq-light',
+    tabSize: 2,
+    lineNumbers: true,
+    autofocus: true,
+    keyMap: 'sublime',
+    gutters: ['CodeMirror-linenumbers']
+  };
 
   Polymer({
+
     is: 'code-mirror',
 
     properties: {
@@ -42,25 +53,25 @@ Example:
 
       mode: {
         type: String,
-        value: 'htmlmixed',
+        value: CM_DEFAULTS.mode,
         observer: '_modeChanged'
       },
 
       theme: {
         type: String,
-        value: 'xq-light',
+        value: CM_DEFAULTS.theme,
         observer: '_themeChanged'
       },
 
       tabSize: {
         type: Number,
-        value: 2,
+        value: CM_DEFAULTS.tabSize,
         observer: '_tabSizeChanged'
       },
 
       lineNumbers: {
         type: Boolean,
-        value: true,
+        value: CM_DEFAULTS.lineNumbers,
         observer: '_lineNumbersChanged'
       },
 
@@ -69,23 +80,20 @@ Example:
     },
 
     ready: function() {
-      this.mirror = CodeMirror(this, {
+      this.mirror = CodeMirror(this.root, {
         value: this.value,
         mode: this.mode,
         theme: this.theme,
         tabSize: this.tabSize,
         lineNumbers: this.lineNumbers,
-        autofocus: true,
-        keyMap: 'sublime',
-        gutters: ['CodeMirror-linenumbers']
+        autofocus: CM_DEFAULTS.autofocus,
+        keyMap: CM_DEFAULTS.keyMap,
+        gutters: CM_DEFAULTS.gutters
       });
 
-      this.mirror.on('change', function (instance, changeObj) {
-        this.fire('code-changed', {
-          instance: instance,
-          changeObj: changeObj
-        });
-      }.bind(this));
+      this.mirror.on('change', (instance, changeObj) => {
+        this.fire('code-changed', {instance: instance, changeObj: changeObj});
+      });
     },
 
     refresh: function() {
@@ -97,30 +105,36 @@ Example:
     },
 
     _valueChanged: function() {
-      if (!this.mirror) {return;}
-      this.mirror.setValue(this.value);
+      if (this.mirror) {
+        this.mirror.setValue(this.value);
+      }
     },
 
     _modeChanged: function() {
-      if (!this.mirror) {return;}
-      this.mirror.setOption('mode', this.mode);
+      if (this.mirror) {
+        this.mirror.setOption('mode', this.mode);
+      }
     },
 
     _themeChanged: function() {
-      if (!this.mirror) {return;}
-      this.mirror.setOption('theme', this.theme);
+      if (this.mirror) {
+        this.mirror.setOption('theme', this.theme);
+      }
     },
 
     _tabSizeChanged: function() {
-      if (!this.mirror) {return;}
-      this.mirror.setOption('tabSize', this.tabSize);
+      if (this.mirror) {
+        this.mirror.setOption('tabSize', this.tabSize);
+      }
     },
 
     _lineNumbersChanged: function() {
-      if (!this.mirror) {return;}
-      this.mirror.setOption('lineNumbers', this.lineNumbers);
+      if (this.mirror) {
+        this.mirror.setOption('lineNumbers', this.lineNumbers);
+      }
     }
 
   });
 
+}());
 </script>
